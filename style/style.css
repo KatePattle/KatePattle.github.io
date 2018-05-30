@@ -1,0 +1,296 @@
+/*
+  CSS can be a little tricky to follow, as there's no heirachy
+  to the document. Hopefully my comments should make it reasonably
+  clear what's going on, but it might still seem a bit messy.
+
+  I'm going to try and split the layout code from the visual styling,
+  but it's not always easy to say where one stops and the other begins.
+
+  in other words, proceed with caution!
+*/
+
+
+/*
+  I'm going to start with the layout. Hopefully you've seen this in the
+  HTML document:
+
+        +---------------------------------+
+        | TITLE                           |
+        +---------------------------------+
+        | main text            | side bar |
+        |                      |          |
+        ...
+        |                      |          |
+        +----------------------+----------+
+        |             footer              |
+        +---------------------------------+
+
+  well, we're going to use the awesome (and new-ish) flexbox rules to
+  create this layout. This means we can do things such as ensure that
+  the document occupies the full vertical space of the browser window
+  even if there's not enough text to make it do so naturally.
+
+  flexbox also makes it way less of a pain in the arse to vertically
+  centre things. Seriously, I know that sounds like pretty fundamental
+  thing but it used to be a fucking nightmare.
+*/
+body {
+  /* ensure the document uses all the space available */
+  margin: 0;
+}
+#main {
+  /*
+    #main is the column that everything sits in. We don't want
+    it to be too wide - text that's 100s of chars wide not only
+    looks ugly, it's kinda painful to read too.
+  
+    That said, if someone's reading on a smaller screen (esp.
+    phones), we want to use all the width available without
+    overflowing.
+  
+    so, first we'll tell it to use the full space, then give it a
+    maximum - the 2nd rule will override the 1st if it needs to.
+  */
+  width: 100%;
+  max-width: 60rem; /* limit to ~60 chars width */
+  
+  /*
+    now let's centre it. If we give two values to 'margin' then
+    it does them in the order [vertical, horiz.], so the rule
+    below says to fit snugly at top & bottom but to evenly split
+    the available horiz. space between left & right.
+  */
+  margin: 0 auto;
+  
+  /*
+    now the magic starts. We're going to have #main organise its
+    children in a column-oriented flex box, and tell it that it
+    should be at least as tall as the browser window.
+  
+    when we later tell #centre to flex, this will mean that the
+    header & footer have constant size, and the stuff in the middle
+    will expand so that all the vertical space is filled.
+  */
+  display: flex;
+  flex-direction: column;
+  
+  min-height: 100vh /* 1vh is 1% of the vertical height of the browser */
+}
+header {
+  /*
+    we're going to use flexbox for the header too.
+  
+    in this case I'm using it to anchor the contents to the lower
+    left corner of the header element, but you might want to play
+    around with this.
+  */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  
+  /*
+    let's also set the height of the header so that more of the
+    pretty background we're going to add will be visible.
+  
+    again - consider playing with this!
+  */
+  height: 15em;
+}
+#centre {
+  /*
+    right, here's our main bit - it contains the #content and the
+    #sidebar. Guess what? More flexbox!
+  */
+  flex: 1;
+  /*
+    the line above only does anything because we set #main to
+    'display: flex'. What 'flex: 1' does is tell this element
+    to expand with a priority of 1. Because all the other children
+    of #main don't have this rule (and so are priority 0), this
+    makes them stay the same size, and makes this element take
+    up all the available space.
+  
+    But this element is going to be both a child of a flexbox and
+    a flexbox itself - it's a really nice way of splitting space
+    between the #content and the #sidebar.
+  */
+  display: flex;
+}
+#content {
+  /*
+    nothing complicated here - let's give the main text area a
+    high flex priority so that it uses lots of space.
+  */
+  flex: 5;
+  
+  min-width: 30rem;
+}
+#sidebar {
+  /*
+    as for the sidebar, it should flex too, but with less priority
+  */
+  flex: 1;
+  /*
+    however, this might make it get crushed by its sibling's higher
+    flex value, so we need to set a minumum width.
+  */
+  min-width: 14rem;
+}
+footer {
+  /*
+    this is the last element in our layout. I'm using flex *again*
+    here, this time to vertically & horizontally centre the contents.
+  */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /*
+    again, make sure it's not too small:
+  */
+  min-height: 5rem;
+}
+/*
+  ok, that's all the layout sorted. Now to make it look nice!
+
+  firstly, let's set everything to use the new font we've pulled
+  from google fonts, and also make it a little bigger while we're
+  at it.
+
+  because the first 'C' of CCS is short for 'cascading', we only
+  need to set style for the root body element, and it'll automatically
+  change everything below it too.
+*/
+body {
+  /* use 'Bitter'. (& fall-back to default serif if there's a problem.)*/
+  font-family: 'Bitter', serif;
+  font-size: 13pt;
+  
+  /* pure black can be a little much - let's use a very
+    dark grey instead */
+  color: #383838;
+  
+  /* set a background color for the empty space on the left & right
+    of the main content. */
+  background: #b0a090;
+}
+#main {
+  /* that background's not great for reading text off, so let's set
+    it to a *very* nearly white grey */
+  background: #e8e8e8;
+  
+  box-shadow: 0 0 5em;
+}
+header {
+  /*
+    that big sexy site banner!
+    it's gonna need a background image.
+  */
+  background-image: url("../imgs/stars.jpg");
+  background-size: cover;
+  /*
+    I'm multiplying the values by a medium-gray. This darkens the
+    image to make it easier to read the text on top of it.
+  
+    however, there's a tonne of blend-modes available, and if you
+    pick a nice colour to use it with you can get some cool effects
+    so have try!
+  */
+  background-color: #808080;
+  background-blend-mode: multiply;
+  /*
+    now set a light colour for the text so that it's readable.
+  */
+  color: #d0d0d0;
+  /* horiz. padding so that the text doesn't rub the borders */
+  padding: 0 1rem;
+}
+header h1 {
+  /*
+    this selects the h1 elem inside the header - which is 
+    main title.
+  */
+  margin: 0.5ex 0; /* was -1, before I started mucking about with it.  Moves header vertically. */ 
+  
+  font-size: 42pt;
+}
+header p {
+  border-top: 6pt solid;
+  font-size: 140%;
+}
+#centre {
+  padding: 0 .5rem;
+}
+/* now the side bar */
+#sidebar {
+  padding: 0 .5rem;
+}
+#content {
+  padding: 0 .5rem;
+}
+
+footer {
+  background: #303030;
+  color: #d0d0d0;
+  
+  font-size: 80%;
+  margin-top: 1rem;
+}
+.copyright {
+  font-style: italic;
+}
+
+/*
+  ok, now let's do the special classes we've defined.
+  it's 10:40pm right now & i'm tired so this stuff is
+  ugly. Make it better!
+*/
+.img-container {
+  background: #383838;
+  padding: .5em;
+}
+.img-container img {
+  width: 100%;
+}
+.job {
+  font-style: italic;
+  font-size: 110%;
+}
+.job::after {
+  content: ','
+}
+.email {
+  font-family: monospace;
+  font-size: 85%;
+}
+.pub a {
+  display: block;
+  border-left: 4pt solid #a0a0a0;
+  padding-left: .5ex;
+  margin: 2pt 0;
+}
+/* lastly, some custom style for the more basic elems */
+h2, h3 {
+  border-bottom: 4pt solid;
+  margin: .5em 0;
+  
+  color: #202020;
+}
+p {
+  text-align: justify;
+  line-height: 160%;
+}
+a {
+  text-decoration: none;
+  background: #d0d0d0;
+  color: #484848;
+  
+  transition: 200ms ease-in;
+}
+a:hover {
+  text-decoration: underline;
+  background: #d8d8d8;
+}
+a:active {
+  color: #202020;
+}

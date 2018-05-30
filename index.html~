@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <!--
+      the 'head' element contains various data that aren't
+      rendered to the browser. This includes things such as
+      the 'title' elem which specifies the name that will show
+      in browser tab titles etc.
+
+      this is also where we put link elems that tell browsers
+      which extra files it needs to load - CSS files etc. It loads
+      them in the order that you put them (ie, a second CSS file
+      can override styles that were set in the first one)
+
+      this would also be where you should put script elems if you
+      want to add any javascript to your site.
+    -->
+    <title>Kate Pattle</title>
+    
+    <!-- load the google fonts file -->
+    <link href="https://fonts.googleapis.com/css?family=Bitter:400,400i,700&subset=latin-ext" rel="stylesheet">
+    <!--
+      now we load normalize.css (https://necolas.github.io/normalize.css/)
+      this helps to make sure that everything appears the same no
+      matter which browser your visitors are using.
+    -->
+    <link rel="stylesheet" type="text/css" href="style/normalize.css">
+    <!-- now we load the custom CSS -->
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+    
+  </head>
+  
+  <body>
+    <!--
+      the body element contains the entire document.
+      this is where the background is - everything
+      else will appear on top of it.
+    -->
+    
+    <div id="main">
+      <!--
+        the #main elem is the central column of the document
+        which contains all the actual text etc of the page.
+
+        the document is shaped something like this grid:
+
+        +---------------------------------+
+        | TITLE                           |
+        +---------------------------------+
+        | main text            | side bar |
+        |                      |          |
+        ...
+        |                      |          |
+        +----------------------+----------+
+        |             footer              |
+        +---------------------------------+
+
+        but we can't actually create a grid directly with HTML & CSS
+        (it's coming to CSS soon), but this doesn't matter. What we'll
+        do instead is put the main section and the side bar inside a
+        parent element, which we split horizontally. Then we can put
+        that parent element with the header & footer and split the
+        document vertically into three.
+
+        the heirachy is like this:
+
+        #main
+          +- header
+          |     +- title
+          |     +- subtitle
+          +- #centre
+          |     +- #content
+          |     |     +- ...
+          |     +- #sidebar
+          |           +- ...
+          +- footer
+                +- ...
+      -->
+      <header>
+        <!-- site title -->
+        <h1>Kate Pattle</h1>
+        <!-- sub title -->
+        <!-- <p>Astrophysicist &amp; Badass</p> -->
+        
+      </header>
+      
+      <main id="centre">
+        
+        <section id="content">
+          <!--
+            this is the main body of the site. I don't know
+            what you intend to put here (perhaps what you're
+            working on, talks you're giving etc?) so I'm just
+            going to copy a bunch of text about stars from
+            wikipedia
+          -->
+          
+          <h2>About Me</h2>
+          
+          
+          <p>I am a postdoctoral researcher studying the early stages of star formation through both observation and modelling.  I am currently working at the Jeremiah Horrocks Institute at the University of Central Lancashire in Preston, UK.</p>
+
+	  <p>I study the collapse of molecular clouds to form the next generation of stars, primarily using continuum and spectroscopic observations taken at submillimetre and millimetre wavelengths with telescopes such as the James Clerk Maxwell Telescope and the Herschel Space Observatory.  My main area of research is the energy balance within star-forming regions, which I am currently investigating both observationally and through analytical modelling.</p>
+
+	  <p>I am currently working on polarimetric observations of nearby molecular clouds as a member of the BISTRO (B-Fields in Star-forming Regions) survey, using the POL-2 polarimeter on the JCMT.  My aim is to determine the magnetic field strength and direction in potentially star-forming cores in nearby molecular clouds.  This will for the first time allow a determination of the full energy balance of a statistically-significant sample of star-forming cores.</p>
+
+	    <!-- <sup>3</sup> <b>interstellar</b> <i>diffuse nebulae</i> -->
+            <!-- <a href="http://en.wikipedia.org/wiki/Merger">mergers</a> -->
+   
+          
+        </section> <!-- end #content -->
+        
+        <aside id="sidebar">
+          <!--
+            this is the section containing the profile pic,
+            contact details etc.
+          -->
+          <h2>Profile</h2>
+          
+          <!--
+            here's the profile pic. I've put it inside a little
+            wrapper elem for style reasons, but you could get rid
+            of it if you want to - you might just have to tweak
+            the CSS slightly if you do.
+          -->
+          <div class="img-container">
+            <img src="imgs/profile.jpg"/>
+          </div>
+          <!-- contact details! -->
+          <div class="info">
+            
+            <h3>Kate Pattle</h3>
+            <span class="job">PDRA</span>
+            <span class="uni">UCLan</span><br>
+            <span class="email">kmpattle <i>at</i> uclan.ac.uk</span>
+            
+          </div>
+          
+	  <div class="links">
+
+	    <h3>Links</h3>
+	    <a href="http://adsabs.harvard.edu/cgi-bin/nph-abs_connect?author=pattle%2C+k.">ADS Record</a><br>
+            <a href="http://orcid.org/0000-0002-8557-3582">ORCID Profile</a><br>
+            <a href="https://www.researchgate.net/profile/Kate_Pattle">Researchgate Profile</a>
+	  </div>
+	  <!--
+             <div class="pub">
+               
+               <h3>Selected Publications</h3>
+               <a class="paper" href="https://dx.doi.org/10.1000/1">
+		 A paper
+               </a>
+               <a class="paper" href="https://dx.doi.org/10.1000/1">
+		 Another paper
+               </a>
+               <a class="paper" href="https://dx.doi.org/10.1000/1">
+		 A third paper
+               </a>
+               <a class="paper" href="https://dx.doi.org/10.1000/1">
+		 One last paper
+               </a>
+            
+             </div>
+	   -->
+          
+        </aside> <!-- end #sidebar -->
+      
+      </main> <!-- end #centre -->
+    
+      <footer>
+        <!--
+          it's obviously up to you what you want to put here.
+          I've put some copyright info, because I can't think
+          of anything else that felt useful
+        -->
+        <!-- <span class="copyright">&copy; Kate Pattle, 2016</span> -->
+        
+        <!-- <p>Anything else you want to add?</p> -->
+      
+      </footer>
+      
+      
+    </div> <!-- end #main -->
+    
+  </body>
+
+</html>
